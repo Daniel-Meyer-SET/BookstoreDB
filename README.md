@@ -89,3 +89,33 @@ TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public."Publishers"
     OWNER to postgres;
+
+
+
+-- Table: public.Authors
+
+-- DROP TABLE IF EXISTS public."Authors";
+
+CREATE TABLE IF NOT EXISTS public."Authors"
+(
+    "AuthorID" integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
+    "AuthorName" text COLLATE pg_catalog."default",
+    "BooksPublished" integer,
+    "PowerWriter" boolean,
+    CONSTRAINT "Authors_pkey" PRIMARY KEY ("AuthorID")
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public."Authors"
+    OWNER to postgres;
+
+-- Trigger: trigger_update_author_power_writer
+
+-- DROP TRIGGER IF EXISTS trigger_update_author_power_writer ON public."Authors";
+
+CREATE OR REPLACE TRIGGER trigger_update_author_power_writer
+    AFTER INSERT OR DELETE OR UPDATE 
+    ON public."Authors"
+    FOR EACH ROW
+    EXECUTE FUNCTION public.update_author_power_writer_trigger();
