@@ -119,3 +119,55 @@ CREATE OR REPLACE TRIGGER trigger_update_author_power_writer
     ON public."Authors"
     FOR EACH ROW
     EXECUTE FUNCTION public.update_author_power_writer_trigger();
+
+
+
+-- Table: public.Reviews
+
+-- DROP TABLE IF EXISTS public."Reviews";
+
+CREATE TABLE IF NOT EXISTS public."Reviews"
+(
+    "ReviewID" integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
+    "CustomerID" integer,
+    "BookID" integer,
+    "Rating" double precision,
+    "MostRecent" boolean,
+    "ReviewDate" date,
+    CONSTRAINT "Reviews_pkey" PRIMARY KEY ("ReviewID"),
+    CONSTRAINT "BookID" FOREIGN KEY ("BookID")
+        REFERENCES public."Books" ("BookID") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID,
+    CONSTRAINT "CustomerID" FOREIGN KEY ("CustomerID")
+        REFERENCES public."Customers" ("CustomerID") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public."Reviews"
+    OWNER to postgres;
+
+-- Trigger: trigger_update_most_recent_reviews
+
+-- DROP TRIGGER IF EXISTS trigger_update_most_recent_reviews ON public."Reviews";
+
+CREATE OR REPLACE TRIGGER trigger_update_most_recent_reviews
+    AFTER INSERT OR DELETE OR UPDATE 
+    ON public."Reviews"
+    FOR EACH STATEMENT
+    EXECUTE FUNCTION public.update_most_recent_reviews();
+
+-- Trigger: update_books_well_reviewed_trigger
+
+-- DROP TRIGGER IF EXISTS update_books_well_reviewed_trigger ON public."Reviews";
+
+CREATE OR REPLACE TRIGGER update_books_well_reviewed_trigger
+    AFTER INSERT OR DELETE OR UPDATE 
+    ON public."Reviews"
+    FOR EACH ROW
+    EXECUTE FUNCTION public.update_books_well_reviewed();
