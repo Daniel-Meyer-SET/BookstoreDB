@@ -1,12 +1,12 @@
  
-## Daniel Meyer 8653583
-## Supreet Kaur 8897223
-## Raj Gandhi   8973100
-****
+**Daniel Meyer 8653583**
+**Supreet Kaur 8897223**
+**Raj Gandhi   8973100**
+
 ***ChatGPT was used to assist in the creation of Functions, and Triggers***
 
 **Tables**
-## Authors Tables
+ **Authors Table**
 ```
 CREATE TABLE IF NOT EXISTS public."Authors"
 (
