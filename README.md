@@ -5,8 +5,8 @@
 
 ***ChatGPT was used to assist in the creation of Functions, and Triggers***
 
-**Tables**
- **Authors Table**
+# Tables
+ ## Authors Table
 ```
 CREATE TABLE IF NOT EXISTS public."Authors"
 (
@@ -21,7 +21,7 @@ TABLESPACE pg_default;
 ALTER TABLE IF EXISTS public."Authors"
     OWNER to postgres;
 ```
-##Books Table
+## Books Table
 ```
 CREATE TABLE IF NOT EXISTS public."Books"
 (
@@ -218,9 +218,9 @@ CREATE OR REPLACE TRIGGER trigger_update_most_popular_genre
 ALTER TABLE public."Purchases"
     DISABLE TRIGGER trigger_update_most_popular_genre;
 ```
-**Functions**
+# Functions
 
-### check_loyal_customer
+## check_loyal_customer
 ```
 CREATE OR REPLACE FUNCTION public.check_loyal_customer(
 	customer_id integer,
@@ -248,7 +248,7 @@ ALTER FUNCTION public.check_loyal_customer(integer, money)
     OWNER TO postgres;
 
 ```
-### check_power_writer
+## check_power_writer
 ```
 CREATE OR REPLACE FUNCTION public.check_power_writer(
 	author_id integer,
@@ -276,7 +276,7 @@ ALTER FUNCTION public.check_power_writer(integer, integer, integer, integer)
     OWNER TO postgres;
 
 ```
-### check_well_reviewed
+## check_well_reviewed
 ```
 CREATE OR REPLACE FUNCTION public.check_well_reviewed(
 	book_id integer)
@@ -354,7 +354,7 @@ $BODY$;
 ALTER FUNCTION public.update_most_popular_genre()
     OWNER TO postgres;
 ```
-**Trigger Functions**
+# Trigger Functions
 ## update_author_power_writer_trigger
 ```
 CREATE OR REPLACE FUNCTION public.update_author_power_writer_trigger()
